@@ -3,10 +3,8 @@ var server = require('./server'),
     requestHandlers = require('./requestHandlers');
 
 var handleObject = {
-    '/' : requestHandlers.start,
-    '/start' : requestHandlers.start,
     '/addProfile' : requestHandlers.addProfile,
-    '/profileBrowser.html' : requestHandlers.profileBrowser
+    '/profileBrowser' : requestHandlers.profileBrowser
 };
 
 server.start(router.route, handleObject);

@@ -2,7 +2,6 @@ var fs = require('fs');
 
 module.exports = {
     'profileBrowser' : profileBrowser,
-    'start' : start,
     'addProfile' : addProfile
 };
 
@@ -18,10 +17,8 @@ function profileBrowser(response) {
         response.end();
     });
 }
-function start(response) {
-    console.log('start was called');
-}
 function addProfile(response, postData) {
-    console.log('addProfile was called');
-    console.log('Post data: ' + postData);
+    response.writeHead(200);
+    response.write('Thanks for letting us fingerprint your browser!');
+    response.end();
 }

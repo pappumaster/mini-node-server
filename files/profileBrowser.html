@@ -29,9 +29,9 @@
 	fingerprintObject.plugins = pluginObj;
 	console.log(JSON.stringify(fingerprintObject));
 
-        $.post('addProfile', "hey"
+        $.post('addProfile', JSON.stringify(fingerprintObject),
         function(data, status) {
-            alert('Sent the data and it was ' + success);
+            alert(data);
         });
     });
     </script>
