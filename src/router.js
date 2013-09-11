@@ -1,13 +1,17 @@
+var _ = require('underscore');
+
 exports.route = function(pathname, handle, response, postData) {
     console.log('About to route a request for ' + pathname);
 
-    if (typeof handle[pathname] === 'function') {
+    if (_.isFunction(handle[pathname])) {
         if (postData !== "") {
             handle[pathname](response, postData);
         } else {
             handle[pathname](response);
         }
     } else {
-        console.log('No request handler found for ' + pathname);
+        console.log(pathname + ' not found.');
+        response.writeHead(404);
+        response.end();
     }
 };
