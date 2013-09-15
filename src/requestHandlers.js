@@ -1,5 +1,5 @@
 var fs = require('fs'),
-    writeToDB = require('./writeToDB');
+    dbOperations = require('./dbOperations');
 
 module.exports = {
     'profileBrowser' : profileBrowser,
@@ -19,7 +19,7 @@ function profileBrowser(response) {
 }
 function addProfile(response, postData) {
     try {
-        writeToDB.writeProfileToDB(JSON.parse(postData));
+        dbOperations.writeProfileToDB(JSON.parse(postData));
     } catch(e) {
         console.log(e);
     }
@@ -28,5 +28,5 @@ function addProfile(response, postData) {
     response.end();
 }
 function fetchProfiles(response) {
-
+    dbOperations.fetchProfilesFromDB(response);
 }

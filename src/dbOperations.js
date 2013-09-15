@@ -16,3 +16,16 @@ exports.writeProfileToDB = function(postData) {
         });
     });
 };
+
+exports.fetchProfilesFromDB = function(response) {
+     MongoClient.connect('mongodb://' + server + ':' + port + '/' + dbName, {native_parser:false}, function(err, db) {
+         assert.equal(null, err);
+         var collection = db.collection('browserProfiles');
+
+         collection.find().toArray(function(err, results) {
+              response.writeHead(200);
+              response.write(JSON.stringify(results));
+              response.end();
+         });
+     });
+};

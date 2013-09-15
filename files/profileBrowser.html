@@ -27,6 +27,7 @@
 	    pluginObj[key].name = navigator.plugins[key].name;
 	    pluginObj[key].filename = navigator.plugins[key].filename;		
 	});
+        pluginObj.length = navigator.plugins.length;
 	fingerprintObject.plugins = pluginObj;
 	console.log(JSON.stringify(fingerprintObject));
 
