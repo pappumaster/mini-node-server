@@ -16,8 +16,7 @@ exports.start = function(route, handle) {
             request.addListener('end', function() {
                 route(pathname, handle, response, postData);
             });
-        }
-        else {
+        } else {
             route(pathname, handle, response, "");
         }
     }

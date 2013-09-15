@@ -1,8 +1,6 @@
 var _ = require('underscore');
 
 exports.route = function(pathname, handle, response, postData) {
-    console.log('About to route a request for ' + pathname);
-
     if (_.isFunction(handle[pathname])) {
         if (postData !== "") {
             handle[pathname](response, postData);
