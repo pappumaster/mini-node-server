@@ -19,7 +19,11 @@ function profileBrowser(response) {
 }
 function addProfile(response, postData) {
     try {
-        dbOperations.writeProfileToDB(JSON.parse(postData));
+        var postObject = JSON.parse(postData);
+	postObject.acceptHeaders['accept'] = response.headers['accept'];
+	postObject.acceptHeaders['accept-language'] = response.headers['accept-language'];
+	postObject.acceptHeaders['accept-encoding'] = response.headers['accept-encoding'];
+        dbOperations.writeProfileToDB(postObject);
     } catch(e) {
         console.log(e);
     }
