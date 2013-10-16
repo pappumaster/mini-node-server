@@ -7,30 +7,51 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
     <script>
     $(function() {
-	var fingerprintObject = {};
+        var fingerprintObject = {};
 
-	fingerprintObject.userAgent = navigator.userAgent;
-	fingerprintObject.language = navigator.language;
-	fingerprintObject.colorDepth = screen.colorDepth;
-	fingerprintObject.width = screen.width;
-	fingerprintObject.height = screen.height;
-	fingerprintObject.timezoneOffset = new Date().getTimezoneOffset();
-	fingerprintObject.localStorage = !!window.localStorage;
-	fingerprintObject.sessionStorage = !!window.localStorage;
+        fingerprintObject.navigator = {};
+        Object.keys(navigator).forEach(function(key) {
+            if (key !== "plugins" && key !== "mimeTypes") {
+                fingerprintObject.navigator[key] = navigator[key];
+            }
+        });
 
-	var pluginObj = {};
+        var pluginObj = {};
 
-	Object.keys(navigator.plugins).forEach(function(key) {
-	    pluginObj[key] = {};
+        Object.keys(navigator.plugins).forEach(function(key) {
+            pluginObj[key] = {};
 
-	    pluginObj[key].description = navigator.plugins[key].description;
-	    pluginObj[key].name = navigator.plugins[key].name;
-	    pluginObj[key].filename = navigator.plugins[key].filename;		
-	});
+            pluginObj[key].description = navigator.plugins[key].description;
+            pluginObj[key].name = navigator.plugins[key].name;
+            pluginObj[key].filename = navigator.plugins[key].filename;
+        });
         pluginObj.length = navigator.plugins.length;
-	fingerprintObject.plugins = pluginObj;
-	console.log(JSON.stringify(fingerprintObject));
+        fingerprintObject.navigator.plugins = pluginObj;
 
+        var mimeTypeObject = {};
+
+        Object.keys(navigator.mimeTypes).forEach(function(key) {
+            mimeTypeObject[key] = {};
+
+            mimeTypeObject[key].description = navigator.mimeTypes[key].description;
+            mimeTypeObject[key].suffixes = navigator.mimeTypes[key].suffixes;
+            mimeTypeObject[key].type = navigator.mimeTypes[key].type;
+
+            if (navigator.mimeTypes[key].enabledPlugin) {
+                mimeTypeObject[key].enabledPlugin = {};
+                mimeTypeObject[key].enabledPlugin.description = navigator.mimeTypes[key].enabledPlugin.description;
+                mimeTypeObject[key].enabledPlugin.name = navigator.mimeTypes[key].enabledPlugin.name;
+                mimeTypeObject[key].enabledPlugin.filename = navigator.mimeTypes[key].filename;
+            }
+        });
+
+        fingerprintObject.navigator.mimeTypes = mimeTypeObject;
+
+        fingerprintObject.screen = {};
+        Object.keys(screen).forEach(function(key) {
+            fingerprintObject.screen[key] = screen[key];
+        });
+        fingerprintObject.timezoneOffset = new Date().getTimezoneOffset();
         $.post('addProfile', JSON.stringify(fingerprintObject),
         function(data, status) {
             alert(data);

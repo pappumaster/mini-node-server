@@ -9,7 +9,7 @@ exports.writeProfileToDB = function(postData) {
     MongoClient.connect('mongodb://' + server + ':' + port + '/' + dbName, {native_parser:false}, function(err, db) {
         assert.equal(null, err);
         var collection = db.collection('browserProfiles');
-        collection.findOne(postData, function(err, item) {
+        collection.findOne({ID : postData.ID}, function(err, item) {
 	    if (!item) {
 	        collection.insert(postData, function(err, results){});
             }

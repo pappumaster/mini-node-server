@@ -14,10 +14,10 @@ exports.start = function(route, handle) {
 		postData += postDataChunk;
             });
             request.addListener('end', function() {
-                route(pathname, handle, response, postData);
+                route(pathname, handle, response, postData, request.headers);
             });
         } else {
-            route(pathname, handle, response, "");
+            route(pathname, handle, response, "", request.headers);
         }
     }
 

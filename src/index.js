@@ -5,7 +5,7 @@ var server = require('./server'),
 var handleObject = {
     '/profileBrowser' : requestHandlers.profileBrowser,
     '/addProfile' : requestHandlers.addProfile,
-    '/fetchProfiles' : requestHandlers.fetchProfiles
+    '/fetchProfiles' : requestHandlers.fetchProfiles,
 };
 
 server.start(router.route, handleObject);
