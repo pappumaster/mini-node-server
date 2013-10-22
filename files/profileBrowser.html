@@ -44,7 +44,7 @@
                 mimeTypeObject[key].enabledPlugin.filename = navigator.mimeTypes[key].filename;
             }
         });
-
+        mimeTypeObject.length = navigator.mimeTypes.length;
         fingerprintObject.navigator.mimeTypes = mimeTypeObject;
 
         fingerprintObject.screen = {};
