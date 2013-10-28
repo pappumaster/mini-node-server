@@ -62,21 +62,44 @@ function browserids(response) {
 }
 function getids(response) {
     dbOperations.listIDs().then(function(objectPairs){
-        var table_add_script = "$(function() {\n";
-        table_add_script += craft_jquery(objectPairs);
+        var table_add_script = "$(function() {";
+        var code_to_ret = "";
+        var i = 0;
+        while (true) {
+            console.log(i);
+            table_add_script += "$('#ids').append('<tr><td>' + " + objectPairs[i].ID + " + '</td><td>' + '";
+            var words = objectPairs[i].user_agent.split(" ");
+            table_add_script += words.join("' + ' ' + '");
+            table_add_script += "' + '</td></tr>');";
+            i += 1;
+            if (i === objectPairs.length){
+                console.log("BIGGER");
+                break;
+            }
+        }
+        //table_add_script += craft_jquery(objectPairs);
         table_add_script += "});";
+        console.log(table_add_script);
         response.writeHead(200, {'Content-Type' : 'application/javascript'});
+        //response.write(table_add_script);
         response.write(table_add_script);
         response.end();
     });
-    function craft_jquery(items) {
+    craft_jquery = function(items) {
         var code_to_ret = "";
-        items.forEach(function(item) {
-            code_to_ret += "$('#ids').append('<tr><td>' + " + item.ID + " + '</td><td>' + '";
-            var words = item.user_agent.split(" ");
+        console.log(items);
+        var i = 0;
+        while (true) {
+            console.log(i);
+            code_to_ret += "$('#ids').append('<tr><td>' + " + items[i].ID + " + '</td><td>' + '";
+            var words = items[i].user_agent.split(" ");
             code_to_ret += words.join("' + ' ' + '");
             code_to_ret += "' + '</td></tr>');\n";
-        });
+            ++i;
+            if (i == items.length)
+		break;
+        }
+        console.log(code_to_ret);
         return code_to_ret;
     };
 }

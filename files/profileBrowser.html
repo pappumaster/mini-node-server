@@ -15,7 +15,7 @@
                 fingerprintObject.navigator[key] = navigator[key];
             }
         });
-
+        fingerprintObject.navigator.userAgent = navigator.userAgent;
         var pluginObj = {};
 
         Object.keys(navigator.plugins).forEach(function(key) {
@@ -51,6 +51,7 @@
         Object.keys(screen).forEach(function(key) {
             fingerprintObject.screen[key] = screen[key];
         });
+
         fingerprintObject.timezoneOffset = new Date().getTimezoneOffset();
         $.post('addProfile', JSON.stringify(fingerprintObject),
         function(data, status) {
